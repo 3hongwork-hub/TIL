@@ -33,6 +33,8 @@
 <details>
   <summary style="font-size: 16px;"><strong id="python">Python (전체 보기)</strong></summary>
 
+- [2026-06-25-파이썬-리스트-컴프리헨션과-filter-성능-비교1782398951390](python/2026-06-25-파이썬-리스트-컴프리헨션과-filter-성능-비교.md1782398951390)
+
 - [2026-01-30-파이썬-리스트-컴프리헨션-과-조건문](python/2026-01-30-파이썬-리스트-컴프리헨션-과-조건문.md)
 
 </details>
