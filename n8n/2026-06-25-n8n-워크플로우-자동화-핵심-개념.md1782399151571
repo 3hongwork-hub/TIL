@@ -1,0 +1,16 @@
+### Context
+n8n을 활용하여 디스코드(Discord) 메시지를 트리거로 받아, 이를 자동으로 TIL(Today I Learned) 형식으로 변환하고 GitHub에 게시하는 워크플로우를 구축했습니다. 반복적인 기록 업무를 자동화하여 지식 관리의 효율성을 높이는 것이 목적입니다.
+
+### Core
+n8n의 핵심은 노드 간의 데이터 흐름을 이해하는 것입니다. 각 노드는 이전 노드로부터 전달받은 데이터(Input)를 처리하고, 변환된 결과값(Output)을 다음 노드로 넘겨줍니다.
+
+*   **Trigger**: Discord 이벤트 수신 (메시지 내용, 사용자 정보 추출)
+*   **Agent**: LLM(예: OpenAI)을 활용하여 수신된 메시지를 정해진 TIL 마크다운 포맷으로 가공
+*   **Action**: GitHub 노드를 통해 생성된 마크다운 파일을 저장소에 푸시(Push)
+*   **Utility**: README.md 파일 내용을 업데이트하여 새로운 TIL 인덱스 추가
+*   **Response**: 처리 완료 후 디스코드에 알림 메시지 발신
+
+### Insight
+n8n 워크플로우를 설계할 때 가장 중요한 것은 각 노드의 입력과 출력 스키마를 정확히 파악하는 것입니다. 노드는 블랙박스가 아니라, 특정 포맷의 JSON 데이터를 받아 정제된 데이터를 반환하는 함수와 같습니다. 이 구조만 명확히 이해하면 복잡한 자동화도 모듈 단위로 쉽게 구현할 수 있습니다.
+
+**출처:** [n8n Node Concepts](https://docs.n8n.io/core-concepts/nodes/), [n8n Key Concepts](https://docs.n8n.io/core-concepts/)
