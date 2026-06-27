@@ -1,0 +1,32 @@
+### Context
+AI 에이전트 기반의 콘텐츠 배포 시스템을 구축할 때, 단일 에이전트의 복잡도를 줄이고 유지보수성을 높이기 위해 스킬 기반의 멀티 에이전트 구조와 자동화 파이프라인 설계가 필수적이다. 특히 공식 API가 없는 웹 플랫폼을 다루기 위해서는 브라우저 자동화 도구와 세션 관리 전략이 중요하다.
+
+### Core
+시스템은 '콘텐츠 라이팅(Content Writing)'과 '브로드캐스팅(Broadcasting)'이라는 두 가지 핵심 스킬로 분리하여 설계한다.
+
+* **에이전트 계층 구조**: 자식-부모 구조를 통해 특정 태스크(Task)를 위임(Delegate)하여 토큰 효율을 극대화한다.
+* **자동화 배포 전략 (Playwright)**: 
+```javascript
+// Playwright를 활용한 세션 유지 및 로그인 예시
+const { chromium } = require('playwright');
+
+async function automatePosting(url, content) {
+  const browser = await chromium.launch({ headless: false });
+  const context = await browser.newContext({ storageState: 'session.json' });
+  const page = await context.newPage();
+  
+  await page.goto(url);
+  // 로그인 및 게시물 업로드 로직
+  await page.fill('#post-input', content);
+  await page.click('#submit-btn');
+  
+  await context.storageState({ path: 'session.json' });
+  await browser.close();
+}
+```
+* **품질 게이트(Quality Gate)**: 데이터 유효성 검사 및 실패 기준 문서를 통해 배포 전 품질을 보장한다.
+
+### Insight
+에이전트 기반 자동화 팀을 구축할 때는 단순히 명령을 내리는 구조를 넘어, 태스크를 스킬 단위로 모듈화하고 '품질 게이트'를 적용하는 것이 중요하다. 특히 '클로드 코드(Claude Code)'와 같은 도구를 활용하여 초기 아키텍처를 빠르게 잡고, 장기적으로는 상주형 멀티 에이전트 팀으로 확장하는 것이 현재의 토큰 및 운영 효율성 한계를 극복하는 핵심 전략이다.
+
+**출처:** [Multi-Agent System Design Patterns](https://www.anthropic.com/news/claude-code), [Playwright Official Documentation](https://playwright.dev/docs/intro)
